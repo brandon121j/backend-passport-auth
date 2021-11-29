@@ -19,14 +19,18 @@ var userJWTLoginStrategy = new JwtStrategy(
                 let user = await User.findOne({ email: userEmail }).select('-password -__v')
 
                 if (!user || user === null) {
-                    return (done(null, false))
+                    //error
+                    return done(null, false)
                 } else {
+                    //next
                     return done(null, user)
                 }
             } else {
+                //error
                 return done(null, false)
             }
         } catch(e) {
+            //error
             return done(e, false)
         }
     }

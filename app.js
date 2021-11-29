@@ -17,9 +17,10 @@ var usersRouter = require('./routes/users');
 
 var userJWTLoginStrategy = require('./routes/lib/passport/user-passport');
 
+
 var app = express();
 
-app.use(cors("*"))
+app.use(cors("*"));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
