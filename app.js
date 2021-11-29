@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
 var mongoose = require('mongoose');
+var passport = require('passport');
 
 mongoose.connect(process.env.MONGO_DB)
   .then(() => console.log("MONGODB CONNECTED"))
@@ -14,6 +15,8 @@ mongoose.connect(process.env.MONGO_DB)
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+var userJWTLoginStrategy = require('./routes/lib/passport/user-passport');
+
 var app = express();
 
 app.use(cors("*"))
@@ -21,6 +24,9 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.use(passport.initialize());
+passport.use('jwt-user', userJWTLoginStrategy);
 
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
